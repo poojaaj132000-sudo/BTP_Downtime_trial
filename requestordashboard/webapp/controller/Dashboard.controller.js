@@ -20,7 +20,7 @@ sap.ui.define([
             oRequestorObject = this;
             oRequestorObject.oResourceBundle = oRequestorObject.getOwnerComponent().getModel("i18n").getResourceBundle();
             
-            //Get API Data
+            //Get API data
             oRequestorObject.getWorkflowData();
         },
 
