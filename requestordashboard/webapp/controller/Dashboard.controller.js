@@ -11,7 +11,7 @@ sap.ui.define([
 ], (Controller, MessageToast, MessageBox, Filter, FilterOperator, formatter, CoreLibrary,Sorter) => {
     "use strict";
     var oRequestorObject;
-    var ValueState = CoreLibrary.ValueState;
+    var ValueState = CoreLibrary.ValueState; 
 
     return Controller.extend("com.sap.cc.requestordashboard.controller.Dashboard", {
 
