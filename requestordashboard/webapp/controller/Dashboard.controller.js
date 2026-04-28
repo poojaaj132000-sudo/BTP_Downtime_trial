@@ -16,6 +16,7 @@ sap.ui.define([
     return Controller.extend("com.sap.cc.requestordashboard.controller.Dashboard", {
 
         formatter: formatter,
+        
         onInit() {
             oRequestorObject = this;
             oRequestorObject.oResourceBundle = oRequestorObject.getOwnerComponent().getModel("i18n").getResourceBundle();
