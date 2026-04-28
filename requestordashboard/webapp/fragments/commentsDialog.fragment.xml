@@ -1,0 +1,42 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        id="commentDialog"
+        icon="sap-icon://information"
+        title="Information"
+        resizable="true"
+        contentWidth="600px"
+        contentHeight="180px"
+        type="Message"
+        afterClose="onDialogAfterClose"
+    >
+        <VBox class="sapUiSmallMargin">
+            <Text
+                text="You have added/deleted attachments. To proceed, please add your comments and confirm.If not, discard the changes."
+            />
+            <TextArea
+                id="commentInput"
+                width="500px"
+                maxLength="250"
+                placeholder="Enter your comments here..."
+                class="sapUiSmallMarginTopBottom"
+            />
+        </VBox>
+
+        <beginButton>
+            <Button
+                text="Confirm"
+                type="Emphasized"
+                press=".onConfirmComment"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Cancel"
+                press=".onCancelComment"
+            />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

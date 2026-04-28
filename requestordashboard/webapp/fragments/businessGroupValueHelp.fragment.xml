@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <SelectDialog
+        id="selectDialogSubject"
+        title="{i18n>businessGroup}"
+        items="{oBusinessGroupModel>/businessGroup}"
+        search=".onValueHelpSearch"
+        confirm=".onValueHelpClose"
+        cancel=".onValueHelpClose"
+    >
+        <StandardListItem 
+        title="{oBusinessGroupModel>businessGroup}"
+        
+        />
+    </SelectDialog>
+</core:FragmentDefinition>

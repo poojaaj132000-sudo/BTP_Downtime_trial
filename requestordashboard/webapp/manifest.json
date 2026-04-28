@@ -1,0 +1,134 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "com.sap.cc.requestordashboard",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.17.6",
+      "toolsId": "1df36d03-2ed0-41d8-8fd3-be4c87370d10"
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "requestor_dashboard-Display": {
+          "semanticObject": "requestor_dashboard",
+          "action": "Display",
+          "title": "{{requestor_dashboard-Display.flpTitle}}",
+          "icon" : "sap-icon://bbyd-dashboard",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "services": {"ShellUIService": {"factoryName": "sap.ushell.ui5service.ShellUIService"}},
+    "dependencies": {
+      "minUI5Version": "1.136.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.sap.cc.requestordashboard.i18n.i18n"
+        }
+      },
+      "oModel": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/data.json",
+        "settings": {},
+        "preload": true
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "com.sap.cc.requestordashboard.view",
+        "async": true,
+        "viewPath": "com.sap.cc.requestordashboard.view"
+      },
+      "routes": [
+        {
+          "name": "RouteDashboard",
+          "pattern": ":?query:",
+          "target": [
+            "TargetDashboard"
+          ]
+        },
+        {
+          "name": "RouteObject",
+          "pattern": "Object/{Num}",
+          "target": [
+            "TargetObject"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetDashboard": {
+          "id": "Dashboard",
+          "name": "Dashboard"
+        },
+        "TargetObject": {
+          "id": "Object",
+          "name": "Object"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "com.sap.cc.requestordashboard.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "requestor_dashboard_UI"
+  }
+}

@@ -1,0 +1,34 @@
+.customMicroProcessFlowSize .sapMSFItem .sapUiIcon {
+    font-size: 100rem;
+    width: 100rem;
+    height: 100rem;
+}
+
+.alignRight {
+    text-align: right;
+    display: block;
+    /* or flex if needed */
+}
+
+.boldText {
+    font-weight: bold;
+}
+
+.stickyHeader {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background-color: white;
+    /* padding: 1rem 0.5rem; */
+    overflow: visible;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+}
+.customMessageStrip {
+    width: 400px;
+    height: 5px;
+}
+.backBtn.sapUshellShellHeadItm{
+    visibility: hidden;
+    
+}

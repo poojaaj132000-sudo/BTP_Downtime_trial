@@ -1,0 +1,93 @@
+_schema-version: "3.2"
+ID: requestor_dashboard_UI
+version: 0.0.1
+modules:
+- name: requestor_dashboard_UI-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: requestor_dashboard_UI-destination-service
+    parameters:
+      content-target: true
+  - name: requestor_dashboard_UI_html_repo_host
+    parameters:
+      service-key:
+        name: requestor_dashboard_UI_html_repo_host-key
+  - name: uaa_requestor_dashboard_UI
+    parameters:
+      service-key:
+        name: uaa_requestor_dashboard_UI-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: requestor_dashboard_UI_requestor_dashboard_UI_html_repo_host
+          ServiceInstanceName: requestor_dashboard_UI-html5-app-host-service
+          ServiceKeyName: requestor_dashboard_UI_html_repo_host-key
+          sap.cloud.service: requestor_dashboard_UI
+        - Authentication: OAuth2UserTokenExchange
+          Name: requestor_dashboard_UI_uaa_requestor_dashboard_UI
+          ServiceInstanceName: requestor_dashboard_UI-xsuaa-service
+          ServiceKeyName: uaa_requestor_dashboard_UI-key
+          sap.cloud.service: requestor_dashboard_UI
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: requestor_dashboard_UI-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: requestor_dashboard_UI_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - comsapccrequestordashboard.zip
+      name: comsapccrequestordashboard
+      target-path: resources/
+- name: comsapccrequestordashboard
+  type: html5
+  path: requestordashboard
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: requestor_dashboard_UI-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: requestor_dashboard_UI-destination-service
+    service-plan: lite
+- name: requestor_dashboard_UI_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: requestor_dashboard_UI-html5-app-host-service
+    service-plan: app-host
+- name: uaa_requestor_dashboard_UI
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: requestor_dashboard_UI-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true

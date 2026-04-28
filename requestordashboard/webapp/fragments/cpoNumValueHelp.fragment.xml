@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <SelectDialog
+        id="selectDialogCpoNum"
+        title="{i18n>cpoNumber}"
+        items="{oCpoNumModel>/cpoNumber}"
+        search=".onValueHelpSearch"
+        confirm=".onValueHelpClose"
+        cancel=".onValueHelpClose"
+    >
+        <StandardListItem 
+        title="{oCpoNumModel>cpoNumber}"
+        
+        />
+    </SelectDialog>
+</core:FragmentDefinition>

@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <SelectDialog
+        id="selectDialogAssignee"
+        title="{i18n>assignee}"
+        multiSelect="true"
+        items="{oAssigneeModel>/assignee}"
+        search=".onValueHelpSearch"
+        confirm=".onValueHelpClose"
+        cancel=".onValueHelpClose"
+    >
+        <StandardListItem 
+        title="{oAssigneeModel>assigneeEmailId}"
+        />
+    </SelectDialog>
+</core:FragmentDefinition>

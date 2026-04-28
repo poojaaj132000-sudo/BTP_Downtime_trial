@@ -1,0 +1,343 @@
+<mvc:View
+    controllerName="com.sap.cc.requestordashboard.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+>
+    <Page
+        id="page1"
+        title="{i18n>appDescription}"
+        showNavButton="true"
+        navButtonPress="onNavBack"
+    >
+        <content>
+            <fb:FilterBar
+                id="filterbar"
+                persistencyKey="myPersKey"
+                useToolbar="false"
+                search="onSearch"
+                filterChange=".onFilterChange"
+                afterVariantLoad=".onAfterVariantLoad"
+                showClearOnFB="true"
+                clear="onClearFilterBar"
+            >
+                <fb:filterGroupItems>
+                    <fb:FilterGroupItem
+                        name="Subject"
+                        label="{i18n>subject}"
+                        groupName="Group1"
+                        visibleInFilterBar="true"
+                    >
+                        <fb:control>
+                            <Input
+                                id="subjectValueHelp"
+                                showValueHelp="true"
+                                valueHelpRequest=".onSubjectValueHelpRequest"
+                                width="280px"
+                            />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem
+                        name="CPO Number"
+                        label="{i18n>cpoNumber}"
+                        groupName="Group1"
+                        visibleInFilterBar="true"
+                    >
+                        <fb:control>
+                            <Input
+                                id="cpoNumberValueHelp"
+                                showValueHelp="true"
+                                valueHelpRequest=".onCpoNumberValueHelpRequest"
+                                width="280px"
+                            />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem
+                        name="Status Order Number"
+                        label="{i18n>salesOrderNumber}"
+                        groupName="Group1"
+                        visibleInFilterBar="true"
+                    >
+                        <fb:control>
+                            <Input
+                                id="salesOrderValueHelp"
+                                showValueHelp="true"
+                                valueHelpRequest=".onSalesOrderValueHelpRequest"
+                                width="280px"
+                            />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem
+                        name="Assignee"
+                        label="{i18n>assignee}"
+                        groupName="Group1"
+                        visibleInFilterBar="true"
+                    >
+                        <fb:control>
+                            <MultiInput
+                                id="assigneeValueHelp"
+                                showValueHelp="true"
+                                valueHelpRequest=".onAssigneeValueHelpRequest"
+                                width="280px"
+                                change=".onChangeAssignee"
+                            />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem
+                        name="Status"
+                        label="{i18n>status}"
+                        groupName="Group1"
+                        visibleInFilterBar="true"
+                    >
+                        <fb:control>
+                            <MultiComboBox
+                                id="statusComboBox"
+                                width="280px"
+                                items="{oStatusModel>/status}"
+                            >
+                                <core:ListItem
+                                    key="{oStatusModel>status}"
+                                    text="{oStatusModel>status}"
+                                />
+                            </MultiComboBox>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem
+                        name="Business Group"
+                        label="{i18n>businessGroup}"
+                        groupName="Group1"
+                        visibleInFilterBar="true"
+                    >
+                        <fb:control>
+                            <Input
+                                id="businessGroupValueHelp"
+                                showValueHelp="true"
+                                valueHelpRequest=".onBusinessGroupValueHelpRequest"
+                                width="280px"
+                            />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem
+                        name="Creation Date"
+                        label="{i18n>creationDate}"
+                        groupName="Group1"
+                        visibleInFilterBar="true"
+                    >
+                        <fb:control>
+                            <DateRangeSelection
+                                id="DRS1"
+                                showCurrentDateButton="true"
+                                showFooter="true"
+                                change="handleChange"
+                                valueState="None"
+                                value="{
+                'type': 'sap.ui.model.type.DateInterval',
+                'parts': [
+                    {
+                        'type': 'sap.ui.model.type.Date',
+                        'path': '/oDRS1Start'
+                    },
+                    {
+                        'type': 'sap.ui.model.type.Date',
+                        'path': '/oDRS1End'
+                    }
+                ]
+            }"
+                            />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem
+                        name="Completion Date"
+                        label="{i18n>completionDate}"
+                        groupName="Group1"
+                        visibleInFilterBar="true"
+                    >
+                        <fb:control>
+                            <DateRangeSelection
+                                id="DRS2"
+                                showCurrentDateButton="true"
+                                showFooter="true"
+                                change="handleChange"
+                                valueState="None"
+                                value="{
+                'type': 'sap.ui.model.type.DateInterval',
+                'parts': [
+                    {
+                        'type': 'sap.ui.model.type.Date',
+                        'path': '/oDRS2Start'
+                    },
+                    {
+                        'type': 'sap.ui.model.type.Date',
+                        'path': '/oDRS2End'
+                    }
+                ]
+            }"
+                            />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                </fb:filterGroupItems>
+            </fb:FilterBar>
+
+            <Table
+                id="workflowTable"
+                items="{
+                path: 'oRequestorModel>/requestorData',
+                sorter: {
+                    path: 'creationDate',
+                    descending: true  
+                }
+            }"
+                growing="true"
+                growingScrollToLoad="true"
+                updateFinished="onTableUpdate"
+                sticky="HeaderToolbar,InfoToolbar,ColumnHeaders"
+                width="auto"
+                itemPress="onRequestPress"
+                mode="MultiSelect"
+                selectionChange=".onSelectionChange"
+            >
+                <headerToolbar>
+                    <OverflowToolbar
+                        id="toolbar"
+                        class="stickyToolbar"
+                    >
+                        <Text
+                            id="selectedItemsText"
+                            text="Selected Items: None"
+                        />
+                        <ToolbarSpacer />
+                        <Button
+                            text="{i18n>complete}"
+                            type="Emphasized"
+                            press="onCompleteTask"
+                        />
+                        <Button
+                            id="btnSettings"
+                            icon="sap-icon://settings"
+                            press="openSettings"
+                        />
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        width="15rem"
+                    >
+                        <Label
+                            id="subjectId"
+                            text="{i18n>subject}"
+                            wrapping="true"
+                        />
+                    </Column>
+
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        width="10rem"
+                    >
+                        <Label
+                            id="cpoNumber"
+                            text="{i18n>cpoNumber}"
+                            wrapping="true"
+                        />
+                    </Column>
+
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        width="8rem"
+                    >
+                        <Label
+                            id="salesOrderNumber"
+                            text="{i18n>salesOrderNumber}"
+                            wrapping="true"
+                        />
+                    </Column>
+
+                    <Column
+                        minScreenWidth="Desktop"
+                        demandPopin="true"
+                        width="17rem"
+                    >
+                        <Label
+                            id="assignee"
+                            text="{i18n>assignee}"
+                            wrapping="true"
+                        />
+                    </Column>
+
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                         width="6rem"
+                    >
+                        <Label
+                            id="status"
+                            text="{i18n>status}"
+                            wrapping="true"
+                        />
+                    </Column>
+
+                    <Column
+                        minScreenWidth="Desktop"
+                        demandPopin="true"
+                        width="6rem"
+                    >
+                        <Label
+                            id="businessGroup"
+                            text="{i18n>businessGroup}"
+                            wrapping="true"
+                        />
+                    </Column>
+
+                    <Column
+                        minScreenWidth="Desktop"
+                        demandPopin="true"
+                    >
+                        <Label
+                            id="creationDate"
+                            text="{i18n>creationDate}"
+                            wrapping="true"
+                        />
+                    </Column>
+
+                    <Column
+                        minScreenWidth="Desktop"
+                        demandPopin="true"
+                    >
+                        <Label
+                            id="completionDate"
+                            text="{i18n>completionDate}"
+                            wrapping="true"
+                        />
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem type="Active">
+                        <cells>
+                            <Text text="{oRequestorModel>subjectLine}" />
+                            <Text text="{oRequestorModel>cpoNumber}" />
+                            <Text text="{oRequestorModel>salesOrderNumber}" />
+                            <Text text="{oRequestorModel>assigneeEmailId}" />
+                            <Text text="{oRequestorModel>status}" />
+                            <Text text="{oRequestorModel>businessGroup}" />
+                            <Text text= "{path: 'oRequestorModel>creationDate', formatter: '.formatter.convDate'}" />
+                            <Text text="{path: 'oRequestorModel>completionDate', formatter: '.formatter.convDate'}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

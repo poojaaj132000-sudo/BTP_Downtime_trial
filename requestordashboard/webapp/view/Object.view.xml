@@ -1,0 +1,366 @@
+<mvc:View
+    controllerName="com.sap.cc.requestordashboard.controller.Object"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified"
+    xmlns:uxap="sap.uxap"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:suite="sap.suite.ui.commons"
+>
+    <m:Page
+        id="objectPage"
+        showNavButton="false"
+    >
+        <uxap:ObjectPageLayout
+            id="page2"
+            upperCaseAnchorBar="false"
+            showFooter="true"
+        >
+            <uxap:sections>
+                <uxap:ObjectPageSection
+                    titleUppercase="false"
+                    showTitle="true"
+                    title="{i18n>general}"
+                    titleLevel="H6"
+                >
+                    <uxap:subSections>
+                        <uxap:ObjectPageSubSection>
+                            <uxap:blocks>
+                                <f:SimpleForm
+                                    editable="true"
+                                    width="100%"
+                                    layout="ResponsiveGridLayout"
+                                    class="sapUiNoMarginBottom"
+                                    emptySpanXL="1"
+                                    emptySpanL="1"
+                                    emptySpanM="1"
+                                    emptySpanS="1"
+                                    columnsXL="2"
+                                    columnsL="2"
+                                    columnsM="2"
+                                >
+                                    <f:content>
+                                        <core:Title text="" />
+
+                                        <m:Label
+                                            id="idSubject"
+                                            text="{i18n>subject}"
+                                        />
+                                        <m:Text
+                                            text="{oTableDataModel>subjectLine}"
+                                        />
+                                        <m:Label
+                                            id="idDescription"
+                                            text="{i18n>description}"
+                                        />
+                                        <m:Text
+                                            text="{oTableDataModel>description}"
+                                        />
+                                        <m:Label
+                                            id="idCPONum"
+                                            text="{i18n>cpoNumber}"
+                                        />
+                                        <m:Text
+                                            text="{oTableDataModel>cpoNumber}"
+                                        />
+
+                                        <m:Label
+                                            id="idSalesOrderNumber"
+                                            text="{i18n>salesOrderNumber}"
+                                        />
+                                        <m:Text
+                                            text="{oTableDataModel>salesOrderNumber}"
+                                        />
+
+                                        <m:Label
+                                            id="idAssignee"
+                                            text="{i18n>assignee}"
+                                        />
+                                        <m:Text
+                                            text="{oTableDataModel>assigneeEmailId}"
+                                        />
+
+                                        <core:Title text="" />
+
+                                        <m:Label
+                                            id="idStatus"
+                                            text="{i18n>status}"
+                                        />
+                                        <m:Text
+                                            text="{oTableDataModel>status}"
+                                        />
+
+                                        <m:Label
+                                            id="idBusinessGroup"
+                                            text="{i18n>businessGroup}"
+                                        />
+                                        <m:Text
+                                            text="{oTableDataModel>businessGroup}"
+                                        />
+
+                                        <m:Label
+                                            id="idCustomer"
+                                            text="{i18n>customerName}"
+                                        />
+                                        <m:Text
+                                            text="{oTableDataModel>customerName}"
+                                        />
+
+                                        <m:Label
+                                            id="idCreationDate"
+                                            text="{i18n>creationDate}"
+                                        />
+                                        <m:Text
+                                            text="{path: 'oTableDataModel>creationDate', formatter: '.formatter.convDate'}"
+                                        />
+
+                                        <m:Label
+                                            id="idCompletionDate"
+                                            text="{i18n>completionDate}"
+                                        />
+
+                                        <m:Text
+                                            text="{path: 'oTableDataModel>completionDate', formatter: '.formatter.convDate'}"
+                                        />
+                                        <m:Label
+                                            id="idClaimedBy"
+                                            text="{i18n>claimedBy}"
+                                        />
+                                        <m:Text
+                                            text="{oClaimModel>/claimedBy}"
+                                        />
+                                    </f:content>
+                                </f:SimpleForm>
+                            </uxap:blocks>
+                        </uxap:ObjectPageSubSection>
+                    </uxap:subSections>
+                </uxap:ObjectPageSection>
+
+                <!-- Attachment section -->
+                <uxap:ObjectPageSection
+                    titleUppercase="false"
+                    showTitle="true"
+                    title="{i18n>attachments}"
+                    titleLevel="H6"
+                >
+                    <uxap:subSections>
+                        <uxap:ObjectPageSubSection>
+                            <uxap:blocks>
+                                <m:VBox
+                                    justifyContent="Start"
+                                    width="100%"
+                                    class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                                >
+                                    <u:FileUploader
+                                        icon="sap-icon://browse-folder"
+                                        id="fileUploader"
+                                        name="myFileUpload"
+                                        uploadUrl="./docservice/root"
+                                        tooltip="Upload your file to validate"
+                                        uploadComplete="handleUploadComplete"
+                                        change="onAttachmentsChange"
+                                        typeMissmatch="handleTypeMissmatch"
+                                        fileType="doc,pdf,csv,htm,ppt,xls,gif,png,jpg,jpeg,html,rtf,bmp,xlsx,docx,pptx,txt,xml,msg,docm,tif,json,zip"
+                                        placeholder="Choose a file for Upload..."
+                                    />
+                                    <m:List
+                                        id="idUploadList"
+                                        enableBusyIndicator="true"
+                                        mode="Delete"
+                                        items="{path: 'oTableDataModel>/ToAttachment'}"
+                                        headerText="Attachments"
+                                        delete="onConfirmDelete"
+                                    >
+                                        <m:headerToolbar>
+                                            <m:OverflowToolbar>
+                                                <m:Title
+                                                    text="{= 'Attachments (' + ${oTableDataModel>/AttachCount} + ')'}"
+                                                    class="bold-text"
+                                                />
+                                                <m:ToolbarSpacer />
+                                            </m:OverflowToolbar>
+                                        </m:headerToolbar>
+                                        <m:CustomListItem>
+                                            <m:HBox>
+                                                <core:Icon
+                                                    size="2rem"
+                                                    src="sap-icon://attachment-photo"
+                                                    class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                                                />
+                                                <m:VBox
+                                                    class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                                                >
+                                                    <m:Link
+                                                        text="{oTableDataModel>Filename}"
+                                                        press="handlePress"
+                                                    />
+                                                </m:VBox>
+                                            </m:HBox>
+                                        </m:CustomListItem>
+                                    </m:List>
+                                </m:VBox>
+                            </uxap:blocks>
+                        </uxap:ObjectPageSubSection>
+                    </uxap:subSections>
+                </uxap:ObjectPageSection>
+
+                <!-- History Section -->
+
+                <uxap:ObjectPageSection
+                    id="SecHeaderDetai2"
+                    titleUppercase="false"
+                    title="History"
+                >
+                    <uxap:subSections>
+                        <uxap:ObjectPageSubSection
+                            id="idHistory"
+                            title="{i18n>history}"
+                            titleUppercase="false"
+                        >
+                            <uxap:blocks>
+                                <m:Table
+                                    id="idHistoryTable"
+                                    class="sapUiResponsiveContentPadding sapUiSizeCompact"
+                                    growingThreshold="1000"
+                                    backgroundDesign="Solid"
+                                    growing="true"
+                                    growingScrollToLoad="true"
+                                    items="{
+                                        path: 'oHistoryModel>/',
+                                        sorter: {
+                                            path: 'date',
+                                            descending: false  
+                                        }
+                                    }"
+                                >
+                                    <m:columns>
+                                        <m:Column id="idUserCol">
+                                            <m:Label
+                                                id="idUser"
+                                                text="{i18n>user}"
+                                            />
+                                        </m:Column>
+                                        <m:Column id="idRoleCol">
+                                            <m:Label
+                                                id="idRole"
+                                                text="{i18n>role}"
+                                            />
+                                        </m:Column>
+                                        <m:Column id="idDescinCol">
+                                            <m:Label
+                                                id="idDescin"
+                                                text="{i18n>decision}"
+                                            />
+                                        </m:Column>
+                                        <m:Column id="idCommentCol">
+                                            <m:Label
+                                                id="idComment"
+                                                text="{i18n>comments}"
+                                            />
+                                        </m:Column>
+                                        <m:Column id="idDateCol">
+                                            <m:Label
+                                                id="idDate"
+                                                text="{i18n>date}"
+                                            />
+                                        </m:Column>
+                                    </m:columns>
+                                    <m:items>
+                                        <m:ColumnListItem
+                                            id="columnListHistory"
+                                        >
+                                            <m:cells>
+                                                <m:Text
+                                                    id="idTxtUser"
+                                                    text="{oHistoryModel>user}"
+                                                />
+                                                <m:Text
+                                                    id="idTxtRole"
+                                                    text="{oHistoryModel>role}"
+                                                />
+                                                <m:Text
+                                                    id="idTxtDescin"
+                                                    text="{oHistoryModel>decision}"
+                                                />
+                                                <m:Text
+                                                    id="idTxtComment"
+                                                    text="{oHistoryModel>comments}"
+                                                />
+                                                <m:Text
+                                                    id="idTxtDate"
+                                                    text="{oHistoryModel>date}"
+                                                />
+                                            </m:cells>
+                                        </m:ColumnListItem>
+                                    </m:items>
+                                </m:Table>
+                            </uxap:blocks>
+                        </uxap:ObjectPageSubSection>
+                    </uxap:subSections>
+                </uxap:ObjectPageSection>
+
+                <uxap:ObjectPageSection
+                    id="SecHeaderDetail"
+                    titleUppercase="false"
+                    title="Comments"
+                >
+                    <uxap:subSections>
+                        <uxap:ObjectPageSubSection
+                            id="idComments"
+                            title="{i18n>comments}"
+                            titleUppercase="false"
+                        >
+                            <uxap:blocks>
+                                <m:VBox>
+                                    <m:TextArea
+                                        id="commentsSection"
+                                        placeholder="Enter comments here"
+                                        width="100%"
+                                        maxLength="250"
+                                        liveChange="onCommentsLiveChange"
+                                    />
+                                    <m:MessageStrip
+                                        id="commentsMessage"
+                                        text="You can enter up to 250 characters."
+                                        type="Information"
+                                        showIcon="true"
+                                        visible="true"
+                                        class="customMessageStrip"
+                                    />
+                                </m:VBox>
+                            </uxap:blocks>
+                        </uxap:ObjectPageSubSection>
+                    </uxap:subSections>
+                </uxap:ObjectPageSection>
+            </uxap:sections>
+
+            <!-- Footer section -->
+            <uxap:footer>
+                <m:OverflowToolbar visible="true">
+                    <m:ToolbarSpacer />
+                    <m:Button
+                        id="sendReminderBtn"
+                        text="Send Reminder"
+                        press=".onRemind"
+                        type="Emphasized"
+                    />
+                    <m:Button
+                        id="reassignEmail"
+                        text="{i18n>reassign}"
+                        press="onClickReassign"
+                        type="Emphasized"
+                    />
+                    <m:Button
+                        id="backBtn"
+                        text="{i18n>back}"
+                        press="onCancel"
+                        type="Default"
+                    />
+                </m:OverflowToolbar>
+            </uxap:footer>
+        </uxap:ObjectPageLayout>
+    </m:Page>
+</mvc:View>

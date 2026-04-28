@@ -1,0 +1,17 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <SelectDialog
+        id="selectDialogSubjectLine"
+        title="{i18n>subject}"
+        items="{oSubjectModel>/subjectLine}"
+        search=".onValueHelpSearch"
+        confirm=".onValueHelpClose"
+        cancel=".onValueHelpClose"
+    >
+        <StandardListItem 
+        title="{oSubjectModel>subjectLine}"
+        />
+    </SelectDialog>
+</core:FragmentDefinition>
