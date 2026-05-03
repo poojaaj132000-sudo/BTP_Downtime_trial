@@ -16,7 +16,7 @@ jobs:
           CTMS_TOKEN_SERVICE_URL: https://77a2eccftrial.authentication.us10.hana.ondemand.com/oauth/token
           CTMS_CLIENT_ID: ${{ secrets.CTMS_CLIENT_ID }}
           CTMS_CLIENT_SECRET: ${{ secrets.CTMS_CLIENT_SECRET }}
-          CTMS_API_URL: https://transport-service-app-backend.ts.cfapps.ap10.hana.ondemand.com/v2
+          CTMS_API_URL: https://transport-service-app-backend.ts.cfapps.us10.hana.ondemand.com/v2
           CTMS_NODE_NAME: DEV
           CTMS_FILE_PATH: mta_archives
           CTMS_TR_DESCRIPTION: Automated deployment from GitHub Actions
