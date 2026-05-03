@@ -18,7 +18,7 @@ jobs:
           CTMS_CLIENT_SECRET: ${{ secrets.CTMS_CLIENT_SECRET }}
           CTMS_API_URL: https://transport-service-app-backend.ts.cfapps.ap10.hana.ondemand.com/v2
           CTMS_NODE_NAME: DEV
-          CTMS_FILE_PATH: gen/archive.mtar
+          CTMS_FILE_PATH: mta_archives
           CTMS_TR_DESCRIPTION: Automated deployment from GitHub Actions
           CTMS_TR_CONTENT_TYPE: MTA
           CTMS_TR_STORAGE_TYPE: FILE
