@@ -356,6 +356,8 @@ sap.ui.define([
 
         //Get Call for Attachments
         getAttachments: function (iIndex) {
+
+            
             oFolderName = oRequestorObject.getView().getModel("oTableDataModel").getData().requestorData[iIndex].leadingDocumentName;
 
             oRequestorObject.getView().getModel("oTableDataModel").setProperty("/AttachCount", 0);
