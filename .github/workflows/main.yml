@@ -1,0 +1,25 @@
+name: SAP BTP deployment with CTMS
+on:
+  push:
+    branches: [main]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: npm ci
+      - run: npm run build
+      - name: Deploy to SAP BTP DEV via CTMS
+        uses: mauriciolauffer/deploy-to-sap-btp-with-ctms@main
+        with: # The following parameters are just examples, you should change them as needed
+          CTMS_TOKEN_SERVICE_URL: https://77a2eccftrial.authentication.us10.hana.ondemand.com/oauth/token
+          CTMS_CLIENT_ID: ${{ secrets.CTMS_CLIENT_ID }}
+          CTMS_CLIENT_SECRET: ${{ secrets.CTMS_CLIENT_SECRET }}
+          CTMS_API_URL: https://transport-service-app-backend.ts.cfapps.ap10.hana.ondemand.com/v2
+          CTMS_NODE_NAME: DEV
+          CTMS_FILE_PATH: gen/archive.mtar
+          CTMS_TR_DESCRIPTION: Automated deployment from GitHub Actions
+          CTMS_TR_CONTENT_TYPE: MTA
+          CTMS_TR_STORAGE_TYPE: FILE
+          CTMS_TR_USER_NAME: ${{ secrets.CTMS_TR_USER_NAME }}
